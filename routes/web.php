@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth']], function() {
     
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
     Route::post('/produk/save', [ProdukController::class, 'save'])->name('produk-save');
+    Route::post('/produk/delete', [ProdukController::class, 'delete'])->name('produk-delete');
+    Route::post('/produk/edit', [ProdukController::class, 'edit'])->name('produk-edit');
 });
 
 
