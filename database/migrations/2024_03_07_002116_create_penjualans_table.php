@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->bigIncrements('PenjualanID');
-            $table->date('TanggalPenjualan');
-            $table->decimal('TotalHarga', 10, 2);
+            $table->date('TanggalPenjualan')->nullable();
+            $table->decimal('TotalHarga', 10, 2)->nullable();
             $table->unsignedBigInteger('PelangganID');
 
             $table->foreign('PelangganID')->references('PelangganID')->on('pelanggan');
