@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdukController;
 
@@ -27,6 +28,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/produk/save', [ProdukController::class, 'save'])->name('produk-save');
     Route::post('/produk/delete', [ProdukController::class, 'delete'])->name('produk-delete');
     Route::post('/produk/edit', [ProdukController::class, 'edit'])->name('produk-edit');
+    
+    Route::get('/user', [UserController::class, 'index'])->name('user');
+    Route::post('/akun/save', [UserController::class, 'save'])->name('akun-save');
+    Route::post('/akun/delete', [UserController::class, 'delete'])->name('akun-delete');
+    Route::post('/akun/edit', [UserController::class, 'edit'])->name('akun-edit');
 });
 
 

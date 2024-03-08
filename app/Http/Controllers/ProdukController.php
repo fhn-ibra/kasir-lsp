@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProdukController extends Controller
 {
     public function index(){
-        return view('admin.produk', [
+        return view('petugas.produk', [
             'data' => Produk::all(),
             'title' => 'Produk'
         ]);

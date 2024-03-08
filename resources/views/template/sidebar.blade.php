@@ -8,6 +8,13 @@
                     <div class="nav-link-icon"><i data-feather="archive"></i></div>
                     Produk
                 </a>
+
+                @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'admin')
+                <a class="nav-link {{ $title == 'User' ? 'active' : '' }}" href="{{ route('user') }}">
+                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    User
+                </a>
+                @endif
             </div>
         </div>
         <!-- Sidenav Footer-->
