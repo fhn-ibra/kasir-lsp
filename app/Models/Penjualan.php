@@ -23,10 +23,10 @@ class Penjualan extends Model
 
 
     public function pelanggan(){
-        $this->belongsTo(Pelanggan::class, 'PelangganID', 'PelangganID');
+        return $this->belongsTo(Pelanggan::class, 'PelangganID', 'PelangganID');
     }
 
     public function detailpenjualan(){
-        $this->hasMany(DetailPenjualan::class, 'PenjualanID', 'PenjualanID');
+       return $this->hasMany(DetailPenjualan::class, 'PenjualanID', 'PenjualanID');
     }
 }

@@ -23,7 +23,7 @@ class Pelanggan extends Model
 
 
     public function penjualan(){
-        $this->hasMany(Penjualan::class, 'PelangganID', 'PelangganID');
+       return $this->hasMany(Penjualan::class, 'PelangganID', 'PelangganID');
     }
 
 }
