@@ -1,5 +1,6 @@
 @extends('template.main')
 
+
 @section('content')
 
     <main>
@@ -10,7 +11,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="grid"></i></div>
-                                Data Akun
+                                Data Pembelian
                             </h1>
                         </div>
                     </div>
@@ -28,18 +29,20 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Username</th>
-                                <th>Level</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Alamat</th>
+                                <th>Nomor Telepon</th>
+                                <th>Total Harga</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Username</th>
-                                <th>Level</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Alamat</th>
+                                <th>Nomor Telepon</th>
+                                <th>Total Harga</th>
                                 <th>Aksi</th>
                             </tr>
                         </tfoot>
@@ -50,16 +53,18 @@
                             @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->username }}</td>
-                                    <td>{!!  $item->level == 'Admin' ? '<div class="badge bg-primary text-white rounded-pill">Admin</div>' : '<div class="badge bg-secondary text-white rounded-pill">Petugas</div>' !!}</td>
+                                    <td>{{ $item->NamaPelanggan }}</td>
+                                    <td>{{ $item->Alamat }}</td>
+                                    <td>{{ $item->NomorTelepon }}</td>
+                                    <td>Rp. {{number_format($item->penjualan->sum('TotalHarga'), 0, ',', '.')  }}</td>
                                     <td>
+                                        <a href="/pembelian/{{ $item->PelangganID }}" class="btn btn-datatable btn-icon btn-transparent-dark"><i class="fa-solid fa-cart-shopping"></i></a>
                                         <button class="btn btn-datatable btn-icon btn-transparent-dark" type="button"
-                                            data-bs-toggle="modal" id="edit" data-bs-target="#editModal" data-id='{{ $item->id }}' data-nama='{{ $item->nama }}' data-username='{{ $item->username }}' data-level='{{ $item->level }}'><i
+                                            data-bs-toggle="modal" id="edit" data-bs-target="#editModal" data-id='{{ $item->PelangganID }}' data-nama='{{ $item->NamaPelanggan }}' data-alamat='{{ $item->Alamat }}' data-no='{{ $item->NomorTelepon }}'><i
                                                 class="fa-solid fa-pen"></i></button>
                                         <button type="button" class="btn btn-datatable btn-icon btn-transparent-dark"
                                             data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete"
-                                            data-id='{{ $item->id }}'><i class="fa-solid fa-trash"></i></button>
+                                            data-id='{{ $item->PelangganID }}'><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -75,30 +80,23 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Akun</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Pelanggan</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('akun-save') }}" method="post">
+                    <form action="{{ route('pembelian-save') }}" method="post">
                         @csrf
                         <div class="form-group mb-2">
-                            <label for="exampleInputPassword1">Nama</label>
+                            <label for="exampleInputPassword1">Nama Pelanggan</label>
                             <input type="text" class="form-control form-control-sm mt-2" name="nama" required>
                         </div>
                         <div class="form-group mb-2">
-                            <label for="exampleInputPassword1">Username</label>
-                            <input type="text" class="form-control form-control-sm mt-2" required name="username">
+                            <label for="exampleInputPassword1">Alamat</label>
+                            <textarea name="alamat" class="form-control mt-2" cols="30" rows="2"></textarea>
                         </div>
                         <div class="form-group mb-2">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control form-control-sm mt-2" required name="password">
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="exampleInputPassword1">Level</label>
-                            <select name="level" class="form-control form-control-sm mt-2">
-                                <option value="Admin">Admin</option>
-                                <option value="Petugas">Petugas</option>
-                            </select>
+                            <label for="exampleInputPassword1">No. Telp</label>
+                            <input type="number" class="form-control form-control-sm mt-2" required name="no">
                         </div>
                 </div>
                 <div class="modal-footer"><button class="btn btn-secondary btn-sm" type="button"
@@ -120,7 +118,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Apakah yakin ingin menghapus data?</p>
-                    <form action="{{ route('akun-delete') }}" method="post">
+                    <form action="{{ route('pembelian-delete') }}" method="post">
                         @csrf
                     <input type="hidden" name="id" id="id">
                 </div>
@@ -138,38 +136,24 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Akun</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Pelanggan</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('akun-edit') }}" method="post">
+                    <form action="{{ route('pembelian-edit') }}" method="post">
                         <input type="hidden" name="id" id="ide">
                         @csrf
                         <div class="form-group mb-2">
-                            <label for="exampleInputPassword1">Nama</label>
-                            <input type="text" class="form-control form-control-sm mt-2" name="nama" id="nama">
+                            <label for="exampleInputPassword1">Nama Pelanggan</label>
+                            <input type="text" class="form-control form-control-sm mt-2" name="nama" id="nama" required>
                         </div>
                         <div class="form-group mb-2">
-                            <label for="exampleInputPassword1">Username</label>
-                            <input type="text" class="form-control form-control-sm mt-2" name="username" id="uname">
+                            <label for="exampleInputPassword1">Alamat</label>
+                            <textarea name="alamat" class="form-control mt-2" cols="30" rows="2" id="alamat"></textarea>
                         </div>
                         <div class="form-group mb-2">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control form-control-sm mt-2" name="password">
-                            <div style="color:red; font-size:10px">
-                                *tidak perlu diisi jika tidak diganti
-                            </div>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="exampleInputPassword1">Level</label>
-                            <select name="level" class="form-control form-control-sm mt-2" required>
-                                <option value="null" disabled selected>Pilih Level</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Petugas">Petugas</option>
-                            </select>
-                            <div style="color:red; font-size:10px">
-                                *tidak perlu diubah jika tidak diganti
-                            </div>
+                            <label for="exampleInputPassword1">No. Telp</label>
+                            <input type="number" class="form-control form-control-sm mt-2" required name="no" id="nos">
                         </div>
 
                 </div>
@@ -193,10 +177,12 @@
         $(document).on('click', '#edit', function(e) {
             var id = $(this).attr("data-id");
             var nama = $(this).attr("data-nama");
-            var username = $(this).attr("data-username");
+            var alamat = $(this).attr("data-alamat");
+            var no = $(this).attr("data-no");
             $('#ide').val(id);
             $('#nama').val(nama);
-            $('#uname').val(username);
+            $('#alamat').val(alamat);
+            $('#nos').val(no);
         });
     </script>
 

@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PembelianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/akun/save', [UserController::class, 'save'])->name('akun-save');
     Route::post('/akun/delete', [UserController::class, 'delete'])->name('akun-delete');
     Route::post('/akun/edit', [UserController::class, 'edit'])->name('akun-edit');
+    
+    Route::get('/pembelian', [PembelianController::class, 'index'])->name('pembelian');
+    Route::post('/pembelian/save', [PembelianController::class, 'save'])->name('pembelian-save');
+    Route::post('/pembelian/delete', [PembelianController::class, 'delete'])->name('pembelian-delete');
+    Route::post('/pembelian/edit', [PembelianController::class, 'edit'])->name('pembelian-edit');
+
+    Route::get('/pembelian/{id}', [BarangController::class, 'index'])->name('beli');
 });
 
 
