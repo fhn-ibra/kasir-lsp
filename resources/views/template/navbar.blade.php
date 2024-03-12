@@ -16,7 +16,7 @@
                 <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
                     aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
-                        <img class="dropdown-user-img" src="img/user.png" />
+                        <img class="dropdown-user-img" src="../img/user.png" />
                         <div class="dropdown-user-details">
                             <div class="dropdown-user-details-name">{{ Auth::user()->nama }}</div>
                             <div class="dropdown-user">{{ Auth::user()->username }}</div>
