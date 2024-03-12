@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/pembelian/edit', [PembelianController::class, 'edit'])->name('pembelian-edit');
 
     Route::get('/pembelian/{id}', [BarangController::class, 'index'])->name('beli');
+    Route::post('/pembelian/beli/save', [BarangController::class, 'save'])->name('beli-save');
 });
 
 

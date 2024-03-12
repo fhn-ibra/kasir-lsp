@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\DetailPenjualan;
 use App\Models\Penjualan;
 use App\Models\Pelanggan;
 use Carbon\Carbon;
@@ -36,7 +38,16 @@ class PembelianController extends Controller
     }
 
     public function delete(Request $request){
-        dd($request->all());
+        $pelanggan = Pelanggan::where('PelangganID', $request->id);
+        $penjualan = Penjualan::where('PelangganID', $request->id);
+        $penjualanID = Penjualan::where('PelangganID', $request->id)->value('PenjualanID');
+        $detailPenjualan = DetailPenjualan::where('PenjualanID', $penjualanID);
+
+        $detailPenjualan->delete();
+        $penjualan->delete();
+        $pelanggan->delete();
+
+        return redirect()->route('pembelian')->with(['delete' => true, 'message' => 'Data Berhasil dihapus']);
     }
 
     public function edit(Request $request){
