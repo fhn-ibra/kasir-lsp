@@ -103,7 +103,7 @@
                                   <td>
                                       <div class="fw-bold">{{ $item->NamaProduk }}</div>
                                   </td>
-                                  <td class="text-end fw-bold">{{ number_format($item->sum('Harga'), 0, ',', '.') }}</td>
+                                  <td class="text-end fw-bold">Rp. {{ number_format($item->Harga, 0, ',', '.') }}</td>
                                   <td class="text-end fw-bold">{{ $item->Stok }}</td>
                                   <td class="text-end fw-bold">
                                     <button class="btn btn-primary btn-sm" {{ $item->Stok <= 0 ? 'disabled' : '' }} id="pilih" data-bs-toggle="modal" data-bs-target="#tambahModal" data-id="{{ $item->ProdukID }}" data-nama="{{ $item->NamaProduk }}" data-harga="{{ $item->Harga }}" data-stok="{{ $item->Stok }}">Pilih</button>
